@@ -1,0 +1,2 @@
+class CoinPair < ApplicationRecord
+end
