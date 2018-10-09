@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_08_192941) do
+ActiveRecord::Schema.define(version: 2018_10_08_202703) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,13 +18,11 @@ ActiveRecord::Schema.define(version: 2018_10_08_192941) do
   create_table "candles", force: :cascade do |t|
     t.string "coin_pair"
     t.datetime "date"
-    t.integer "high"
-    t.integer "low"
-    t.integer "open"
-    t.integer "close"
-    t.integer "volume"
-    t.integer "quote_volume"
-    t.integer "weighted_avg"
+    t.float "high"
+    t.float "low"
+    t.float "open"
+    t.float "close"
+    t.float "volume"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["coin_pair"], name: "index_candles_on_coin_pair"

@@ -1,4 +1,5 @@
 require 'httparty'
+require 'date'
 
 desc "This task is called by the Heroku scheduler add-on"
 
@@ -10,12 +11,16 @@ task :fetch_candles do
     coins.each do |coin_pair|
         response = HTTParty.get("https://poloniex.com/public?command=returnChartData&currencyPair=#{coin_pair}&start=1405699200&end=9999999999&period=14400")
         response.parsed_response.each do |entry|
-            entry[:coin_pair] = coin_pair
-            entry[:quote_volume] = entry.delete "quoteVolume"
-            entry[:weighted_avg] = entry.delete "weightedAverage"
-            Candle.new do |c|
-                c.
+            candle = Candle.new do |c|
+                c.coin_pair = coin_pair
+                c.date = Time.at(entry['date']).to_datetime
+                c.high = entry['high']
+                c.low = entry['low']
+                c.open = entry['open']
+                c.close = entry['close']
+                c.volume = entry['volume']
             end
+            candle.save 
         end
     end
     #save that in a variable
